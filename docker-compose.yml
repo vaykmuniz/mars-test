@@ -7,9 +7,11 @@ services:
       - "4173:4173"
     network_mode: "host"
 
-#  backend:
-#    build:
-#      context: ./backend
-#      dockerfile: Dockerfile
-#    ports:
-#      - "3000:3000"
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    network_mode: "host"
+    

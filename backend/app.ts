@@ -1,15 +1,35 @@
-import express, { Request, Response, NextFunction } from "express";
-// import routes from "./routes";
-
+import express, { Application } from "express";
 import cors from "cors";
+import dotenv from "dotenv";
+import { marsRouter, errorRouter } from "./routes";
 
-const app = express();
+dotenv.config();
 
-app.use(cors());
-app.use(express.json());
+class Api {
+  public app: Application = express();
+  public port: number = process.env.PORT ? Number(process.env.PORT) : 3000;
 
-app.use("*", (_req: Request, res: Response, _next: NextFunction) => {
-  res.status(404).json({ message: "Route not found" });
-});
+  constructor() {
+    this.setup();
+    this.addRoutes();
+    this.start();
+  }
 
-export default app;
+  setup() {
+    this.app.use(cors());
+    this.app.use(express.json());
+  }
+
+  addRoutes() {
+    this.app.use("*", errorRouter);
+    this.app.use("mars", marsRouter);
+  }
+
+  start() {
+    this.app.listen(this.port, () => {
+      console.log(`App listening on the port ${this.port}`);
+    });
+  }
+}
+
+export default new Api();
