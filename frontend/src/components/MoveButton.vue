@@ -9,9 +9,20 @@ import {
 
 type Props = {
   variant: 'rotate' | 'rotate-90' | 'move'
+  onclick?: (value: string) => void
 }
 
 const props = defineProps<Props>()
+
+const dic = {
+  rotate: 'R',
+  'rotate-90': 'L',
+  move: 'M',
+}
+
+function clicked() {
+  props.onclick?.(dic[props.variant])
+}
 
 const icon = {
   rotate: faRotateBack,
@@ -21,7 +32,7 @@ const icon = {
 </script>
 
 <template>
-  <button class="move-button">
+  <button class="move-button" @click="clicked">
     <FontAwesomeIcon :icon="icon" />
   </button>
 </template>
