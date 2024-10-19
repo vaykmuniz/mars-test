@@ -1,10 +1,9 @@
 export class MoveController {
   static async move(from: number[], moves: string) {
     try {
-      const newPosition = [0, 0];
       return {
-        x: newPosition[0],
-        y: newPosition[1],
+        x: 0,
+        y: 0,
         face: "L",
       };
     } catch (error) {
