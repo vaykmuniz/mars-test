@@ -1,14 +1,14 @@
 services:
-  frontend:
-    build:
-      context: ./frontend
-      dockerfile: Dockerfile
-    container_name: frontend
-    ports:
-      - "4173:4173"
+#  frontend:
+#    build:
+#      context: ./frontend
+#      dockerfile: Dockerfile
+#    container_name: frontend
+#    ports:
+#      - "4173:4173"
     #networks:
     # - app-network
-    network_mode: "host"
+#    network_mode: "host"
 
   backend:
     build:

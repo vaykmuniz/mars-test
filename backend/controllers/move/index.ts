@@ -1,5 +1,7 @@
+import { Position } from "@prisma/client";
+
 export class MoveController {
-  static async move(from: number[], moves: string) {
+  static async move(from: Position, moves: string) {
     try {
       return {
         x: 0,

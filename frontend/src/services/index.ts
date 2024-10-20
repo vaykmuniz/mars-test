@@ -1,6 +1,6 @@
 import type { Position } from '@/shared/types'
 
-export const BASE_URL = 'localhost:3000/'
+export const BASE_URL = '127.0.0.1:3000'
 
 export const GET_CURRENT_POSITION_KEYS = ['GET_CURRENT_POSITION']
 
