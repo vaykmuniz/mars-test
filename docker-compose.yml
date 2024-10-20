@@ -1,3 +1,5 @@
+version: '3'
+
 services:
   frontend:
     build:
@@ -6,9 +8,8 @@ services:
     container_name: frontend
     ports:
       - "4173:4173"
-#    networks:
-#      minha-rede:
-#        ipv4_address: 192.168.1.10
+    networks:
+      - app-network
 
   backend:
     build:
@@ -17,14 +18,28 @@ services:
     container_name: backend 
     ports:
       - "3000:3000"
-#    networks:
-#      minha-rede:
-#        ipv4_address: 192.168.1.11
+    environment:
+      DATABASE_URL: mongodb://root:example@mongo:27017/mydatabase
+    depends_on:
+      - mongo 
+    networks:
+      - app-network
 
-#networks:
-#  minha-rede:
-#    driver: bridge
-#    ipam:
-#      config:
-#        - subnet: 192.168.1.0/24
-    
+  mongo:
+    image: mongo:6.0 
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root  
+      MONGO_INITDB_ROOT_PASSWORD: example
+    volumes:
+      - mongo-data:/data/db
+    networks:
+      - app-network
+
+volumes:
+  mongo-data:
+
+networks:
+  app-network:
+    driver: bridge

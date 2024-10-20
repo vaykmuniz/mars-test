@@ -43,10 +43,11 @@ const icon = {
   align-items: center;
   padding: 10px;
   border: none;
-  background-color: #007bff;
+  border: 1px solid #007bff;
+  background-color: transparent;
   color: white;
   cursor: pointer;
-  border-radius: 5px;
+  border-radius: 8px;
 }
 
 .move-button:hover {
