@@ -26,6 +26,7 @@ const target = 200
   background-image: url('../shared/images/mars.jpg');
   background-size: cover;
   background-position: center;
+  border-radius: 4px;
 }
 
 .grid {
@@ -34,7 +35,8 @@ const target = 200
   grid-template-rows: repeat(auto-fill, minmax(50px, 1fr));
   transform: rotate(180deg);
 
-  gap: 1px;
+  gap: 2px;
+  padding: 4px;
   position: absolute;
   top: 0;
   left: 0;
