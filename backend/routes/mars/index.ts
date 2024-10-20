@@ -6,13 +6,17 @@ const marsRouter = Router();
 marsRouter.get("/", async (req, res) => {
   try {
     const position = await PositionController.getCurrentPosition();
+    console.log(position);
     if (position) {
-      res.send({ current_position: position });
+      res.status(200).send({ current_position: position });
+    } else {
+      res.send({ msg: "Position not found", current_position: PositionController.startPosition });
     }
   } catch (error) {
     console.log(error);
-    res.status(400).send({ msg: 'Error get position' });
-    }
+    res.status(400).send({ msg: "Error get position" });
+  }
+
 });
 
 marsRouter.post("/move", async (req, res) => {
@@ -23,9 +27,10 @@ marsRouter.post("/move", async (req, res) => {
       const newPosition = await PositionController.move(position, moves);
       res.send({ current_position: newPosition });
     }
+    res.status(400).send({ msg: "Move failed!" });
   } catch (error) {
     console.error(error);
-    res.status(400).send({ msg: 'Move failed! Error update position!' });
+    res.status(400).send({ msg: "Move failed! Error update position!" });
   }
 });
 
