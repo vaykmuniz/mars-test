@@ -4,29 +4,44 @@ import { Position } from "@prisma/client";
 
 export class PositionController {
   static get startPosition() {
-    return { x: 0, y: 0, direction: "N" };
+    return {
+      id: "1",
+      x: 0,
+      y: 0,
+      face: "N",
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    };
   }
 
   static async getCurrentPosition() {
     try {
       const position = await prisma.position.findFirst();
-      return position;
+      return position ?? this.startPosition;
     } catch (error) {
       console.error(error);
       return null;
     }
   }
 
-  static async move(position: Position, moves: string) {
+  static async move(from: Position, moves: string) {
     try {
-      const newPosition = await MoveController.move(position, moves);
-      if (newPosition) {
-        const updated = await prisma.position.update({
-          where: { id: position.id },
-          data: newPosition,
-        });
-        return updated;
-      }
+      const robot = new MoveController(from);
+      return robot.executeMoves(moves);
+    } catch (error) {
+      console.error(error);
+      return null;
+    }
+  }
+
+  static async updateOrCreatePosition(position: Position) {
+    const { id, ...data } = position;
+    try {
+      return await prisma.position.upsert({
+        where: { id },
+        update: data,
+        create: data,
+      });
     } catch (error) {
       console.error(error);
       return null;

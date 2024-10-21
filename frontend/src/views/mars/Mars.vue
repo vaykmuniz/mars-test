@@ -22,9 +22,8 @@ const { mutate } = useMutation({
   mutationFn: updatePosition,
 })
 
-function appendScript(value: string) {
-  script.value = [...script.value, value]
-  console.log(script.value)
+function appendScript(move: string) {
+  script.value = [...script.value, move]
 }
 
 function clear() {

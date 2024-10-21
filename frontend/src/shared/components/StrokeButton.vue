@@ -9,7 +9,6 @@ const props = defineProps<Props>()
 <template>
   <button
     :style="{
-      color: props.color,
       borderColor: props.color,
       '--hover-bg-color': props.color,
     }"
@@ -21,6 +20,7 @@ const props = defineProps<Props>()
 
 <style scoped>
 .custom-button {
+  color: whitesmoke;
   background-color: transparent;
   border: 2px solid;
   border-radius: 8px;

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { faDog, faXmark } from '@fortawesome/free-solid-svg-icons'
+import { faDog, faFlagCheckered } from '@fortawesome/free-solid-svg-icons'
 
 import { useQuery } from '@tanstack/vue-query'
 import {
@@ -9,33 +9,51 @@ import {
   getCurrentPosition,
   getPreview,
 } from '@/services'
-import type { Position } from '@/shared/types'
-import { computed } from 'vue'
+import { computed, toRefs } from 'vue'
 
-const { script } = defineProps<{ script: string[] }>()
-
-const { data } = useQuery<Position>({
+const props = defineProps<{ script: string[] }>()
+const { script } = toRefs(props)
+const { data: lastPosition } = useQuery({
   queryKey: GET_CURRENT_POSITION_KEYS,
   queryFn: getCurrentPosition,
 })
 
-const position = computed(() => {
-  if (data.value?.x && data.value.y) {
-    return data.value.y * 15 + data.value.x
-  }
-  return 1
+const { data: preview } = useQuery({
+  queryKey: [...GET_PREVIEW_KEYS, script],
+  queryFn: () => getPreview(script.value),
 })
 
-const { data: preview } = useQuery({
-  queryKey: GET_PREVIEW_KEYS,
-  queryFn: () => getPreview(script),
+const faceToDeg: { [key: string]: number } = {
+  N: 0,
+  E: 90,
+  S: 180,
+  W: 270,
+}
+
+const position = computed(() => {
+  if (lastPosition?.value?.current_position) {
+    return {
+      value:
+        lastPosition.value.current_position.y * 15 +
+        lastPosition.value.current_position.x +
+        1,
+      face: faceToDeg[lastPosition.value.current_position.face] || 0,
+    }
+  }
+  return { value: null, face: 0 }
 })
 
 const target = computed(() => {
-  if (preview.value?.x && preview.value.y) {
-    return preview.value.y * 15 + preview.value.x
+  if (preview.value?.current_position) {
+    return {
+      value:
+        preview.value.current_position.y * 15 +
+        preview.value.current_position.x +
+        1,
+      face: faceToDeg[preview.value.current_position.face] || 0,
+    }
   }
-  return 225
+  return { value: null, face: 0 }
 })
 </script>
 
@@ -43,8 +61,15 @@ const target = computed(() => {
   <div class="board">
     <div class="grid">
       <div v-for="n in 225" :key="n" class="grid-item">
-        <span v-if="position === n || target === n" style="color: black">
-          <FontAwesomeIcon :icon="n === position ? faDog : faXmark" size="2x" />
+        <span
+          v-if="position.value === n || target.value === n"
+          style="color: black"
+        >
+          <FontAwesomeIcon
+            :icon="n === position.value ? faDog : faFlagCheckered"
+            size="2x"
+            :class="`fa-rotate-${n === position.value ? position.face : target.face}`"
+          />
         </span>
       </div>
     </div>

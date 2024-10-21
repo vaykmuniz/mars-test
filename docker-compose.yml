@@ -6,6 +6,9 @@ services:
     container_name: frontend
     ports:
       - "4173:4173"
+    depends_on:
+      - mongo 
+      - backend
     network_mode: "host"
 
   backend:

@@ -3,3 +3,8 @@ export type Position = {
     y: number;
     face: string;
 }
+
+export type ResponsePosition = {
+    msg?: string;
+    current_position?: Position;
+}
