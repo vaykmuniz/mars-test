@@ -12,8 +12,15 @@ import {
   faRotateForward,
   faArrowUp,
 } from '@fortawesome/free-solid-svg-icons'
+import { useMutation } from '@tanstack/vue-query'
+import { UPDATE_POSITION_KEYS, updatePosition } from '@/services'
 
 const script = ref<string[]>([])
+
+const { mutate } = useMutation({
+  mutationKey: UPDATE_POSITION_KEYS,
+  mutationFn: updatePosition,
+})
 
 function appendScript(value: string) {
   script.value = [...script.value, value]
@@ -25,7 +32,8 @@ function clear() {
 }
 
 function submit() {
-  console.log('submit')
+  const a = mutate(script.value)
+  console.log('submit', a)
 }
 </script>
 
@@ -47,7 +55,7 @@ function submit() {
       </div>
       <div class="row">
         <StrokeButton color="red" :onclick="clear">
-          <FontAwesomeIcon :icon="faTrashCan" />CLEAR
+          <FontAwesomeIcon :icon="faTrashCan" /> CLEAR
         </StrokeButton>
         <StrokeButton color="greenyellow" :onclick="submit">
           <FontAwesomeIcon :icon="faCheck" /> SUBMIT

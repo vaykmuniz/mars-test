@@ -3,7 +3,12 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faDog, faXmark } from '@fortawesome/free-solid-svg-icons'
 
 import { useQuery } from '@tanstack/vue-query'
-import { GET_CURRENT_POSITION_KEYS, getCurrentPosition } from '@/services'
+import {
+  GET_CURRENT_POSITION_KEYS,
+  GET_PREVIEW_KEYS,
+  getCurrentPosition,
+  getPreview,
+} from '@/services'
 import type { Position } from '@/shared/types'
 import { computed } from 'vue'
 
@@ -20,32 +25,15 @@ const position = computed(() => {
   }
   return 1
 })
+
+const { data: preview } = useQuery({
+  queryKey: GET_PREVIEW_KEYS,
+  queryFn: () => getPreview(script),
+})
+
 const target = computed(() => {
-  if (data.value?.face) {
-    let x = data.value.x
-    let y = data.value.y
-    let face = data.value.face
-
-    for (const command of script) {
-      if (command === 'M') {
-        if (face === 'N') y -= 1
-        if (face === 'S') y += 1
-        if (face === 'E') x += 1
-        if (face === 'W') x -= 1
-      } else if (command === 'L') {
-        if (face === 'N') face = 'W'
-        else if (face === 'W') face = 'S'
-        else if (face === 'S') face = 'E'
-        else if (face === 'E') face = 'N'
-      } else if (command === 'R') {
-        if (face === 'N') face = 'E'
-        else if (face === 'E') face = 'S'
-        else if (face === 'S') face = 'W'
-        else if (face === 'W') face = 'N'
-      }
-    }
-
-    return y * 15 + x
+  if (preview.value?.x && preview.value.y) {
+    return preview.value.y * 15 + preview.value.x
   }
   return 225
 })
