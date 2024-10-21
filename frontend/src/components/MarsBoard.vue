@@ -7,7 +7,7 @@ import { GET_CURRENT_POSITION_KEYS, getCurrentPosition } from '../services'
 import type { Position } from '../shared/types'
 import { computed } from 'vue'
 
-const { script } = defineProps<{ script: string }>()
+const { script } = defineProps<{ script: string[] }>()
 
 const { data } = useQuery<Position>({
   queryKey: GET_CURRENT_POSITION_KEYS,

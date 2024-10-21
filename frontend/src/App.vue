@@ -38,7 +38,7 @@ function submit() {
         <SubmitButton :onclick="submit" />
       </div>
     </div>
-    <MarsBoard />
+    <MarsBoard :script="script" />
   </div>
 </template>
 
