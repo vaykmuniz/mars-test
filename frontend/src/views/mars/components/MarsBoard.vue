@@ -3,8 +3,8 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faDog, faXmark } from '@fortawesome/free-solid-svg-icons'
 
 import { useQuery } from '@tanstack/vue-query'
-import { GET_CURRENT_POSITION_KEYS, getCurrentPosition } from '../services'
-import type { Position } from '../shared/types'
+import { GET_CURRENT_POSITION_KEYS, getCurrentPosition } from '@/services'
+import type { Position } from '@/shared/types'
 import { computed } from 'vue'
 
 const { script } = defineProps<{ script: string[] }>()
@@ -68,7 +68,7 @@ const target = computed(() => {
   position: relative;
   width: 800px;
   height: 800px;
-  background-image: url('../shared/images/mars.jpg');
+  background-image: url('@/shared/images/mars.jpg');
   background-size: cover;
   background-position: center;
   border-radius: 4px;
