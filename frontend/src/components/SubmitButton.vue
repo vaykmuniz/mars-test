@@ -5,7 +5,7 @@ import { faCheck } from '@fortawesome/free-solid-svg-icons'
 
 <template>
   <button class="clear-button">
-    <FontAwesomeIcon :icon="faCheck" /> Submit
+    <FontAwesomeIcon :icon="faCheck" /> SUBMIT
   </button>
 </template>
 

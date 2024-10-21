@@ -5,7 +5,7 @@ import { faTrashCan } from '@fortawesome/free-solid-svg-icons'
 
 <template>
   <button class="clear-button">
-    <FontAwesomeIcon :icon="faTrashCan" />Clear
+    <FontAwesomeIcon :icon="faTrashCan" />CLEAR
   </button>
 </template>
 

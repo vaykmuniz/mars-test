@@ -41,8 +41,7 @@ const icon = {
 .move-button {
   display: flex;
   align-items: center;
-  padding: 10px;
-  border: none;
+  padding: 12px;
   border: 1px solid #007bff;
   background-color: transparent;
   color: white;
