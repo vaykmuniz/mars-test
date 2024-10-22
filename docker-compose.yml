@@ -1,4 +1,33 @@
 services:
+  mongo:
+    image: mongo:6.0
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+      MONGO_LOGLEVEL: "warning"
+      MONGO_REPLICA_SET_NAME: "rs0"
+    volumes:
+      - mongo-data:/data/db
+    command: >
+      bash -c "mongod --replSet rs0 --bind_ip localhost"
+    network_mode: "host"
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: backend
+    ports:
+      - "3000:3000"
+    environment:
+      DATABASE_URL: mongodb://root:example@127.0.0.1:27017/mydatabase?authSource=admin&replicaSet=rs0
+    depends_on:
+      - mongo
+    command: sh -c 'npx prisma generate && npx prisma db push && npm start'
+    network_mode: "host"
+
   frontend:
     build:
       context: ./frontend
@@ -7,33 +36,8 @@ services:
     ports:
       - "4173:4173"
     depends_on:
-      - mongo 
+      - mongo
       - backend
-    network_mode: "host"
-
-  backend:
-    build:
-      context: ./backend
-      dockerfile: Dockerfile
-    container_name: backend 
-    ports:
-      - "3000:3000"
-    environment:
-      DATABASE_URL: mongodb://root:example@127.0.0.1:27017/mydatabase?authSource=admin
-    depends_on:
-      - mongo 
-    command: sh -c 'npx prisma generate && npx prisma db push && npm start'
-    network_mode: "host"
-
-  mongo:
-    image: mongo:6.0 
-    ports:
-      - "27017:27017"
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: root  
-      MONGO_INITDB_ROOT_PASSWORD: example
-    volumes:
-      - mongo-data:/data/db
     network_mode: "host"
 
 volumes:

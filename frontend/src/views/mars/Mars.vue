@@ -12,14 +12,22 @@ import {
   faRotateForward,
   faArrowUp,
 } from '@fortawesome/free-solid-svg-icons'
-import { useMutation } from '@tanstack/vue-query'
-import { UPDATE_POSITION_KEYS, updatePosition } from '@/services'
+import { useMutation, useQueryClient } from '@tanstack/vue-query'
+import {
+  GET_CURRENT_POSITION_KEYS,
+  UPDATE_POSITION_KEYS,
+  updatePosition,
+} from '@/services'
 
 const script = ref<string[]>([])
+const queryClient = useQueryClient()
 
 const { mutate } = useMutation({
   mutationKey: UPDATE_POSITION_KEYS,
   mutationFn: updatePosition,
+  onSuccess: () => {
+    queryClient.invalidateQueries({ queryKey: GET_CURRENT_POSITION_KEYS })
+  },
 })
 
 function appendScript(move: string) {
@@ -31,8 +39,8 @@ function clear() {
 }
 
 function submit() {
-  const a = mutate(script.value)
-  console.log('submit', a)
+  mutate(script.value)
+  script.value = []
 }
 </script>
 
@@ -42,13 +50,13 @@ function submit() {
       <MarsHeaders />
       <MoveList :script="script" />
       <div class="row">
-        <StrokeButton color="blue" :onclick="() => appendScript('L')">
+        <StrokeButton color="skyblue" :onclick="() => appendScript('L')">
           <FontAwesomeIcon :icon="faRotateBack" />
         </StrokeButton>
-        <StrokeButton color="blue" :onclick="() => appendScript('M')">
+        <StrokeButton color="skyblue" :onclick="() => appendScript('M')">
           <FontAwesomeIcon :icon="faArrowUp" />
         </StrokeButton>
-        <StrokeButton color="blue" :onclick="() => appendScript('R')">
+        <StrokeButton color="skyblue" :onclick="() => appendScript('R')">
           <FontAwesomeIcon :icon="faRotateForward" />
         </StrokeButton>
       </div>

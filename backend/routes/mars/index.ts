@@ -9,7 +9,7 @@ marsRouter.get("/", async (req, res) => {
     if (position) {
       res.status(200).send({ current_position: position });
     } else {
-      res.send({
+      res.status(200).send({
         msg: "Position not found",
         current_position: PositionController.startPosition,
       });
@@ -51,9 +51,11 @@ marsRouter.post("/move", async (req, res) => {
           createdAt: position.createdAt,
           updatedAt: new Date(),
         });
-        res.send({ current_position: updated });
+        res.status(200).send({ current_position: updated });
+        return;
       }
       res.status(400).send({ msg: "Move failed!" });
+      return;
     }
     res.status(400).send({ msg: "Move failed! No position found!" });
   } catch (error) {
