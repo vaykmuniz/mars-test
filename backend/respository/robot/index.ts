@@ -79,4 +79,17 @@ export class RobotRepository {
       return null;
     }
   }
+
+  static async destroyWhere(
+    where: Omit<Position, "id" | "face" | "createdAt" | "updatedAt">
+  ) {
+    try {
+      return await prisma.position.deleteMany({
+        where,
+      });
+    } catch (error) {
+      console.error(error);
+      return null;
+    }
+  }
 }

@@ -1,10 +1,6 @@
 <script setup lang="ts">
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import {
-  faDog,
-  faFlagCheckered,
-  type IconDefinition,
-} from '@fortawesome/free-solid-svg-icons'
+import { faDog, faFlagCheckered } from '@fortawesome/free-solid-svg-icons'
 
 import { useMutation, useQuery, useQueryClient } from '@tanstack/vue-query'
 import {
@@ -15,20 +11,13 @@ import {
   LAND_KEYS,
   postLand,
 } from '@/services'
-import { computed, ref, toRefs, watch } from 'vue'
+import { computed, toRefs } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { type Position } from '@/shared/types'
-import { getPositionCount } from '@/shared/utils'
+import { getPositionCount, faceToDeg } from '@/shared/utils'
 
 const route = useRoute()
 const router = useRouter()
-
-const faceToDeg: { [key: string]: number } = {
-  N: 0,
-  E: 90,
-  S: 180,
-  W: 270,
-}
 
 const props = defineProps<{ script: string[] }>()
 const queryClient = useQueryClient()

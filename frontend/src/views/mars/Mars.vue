@@ -14,8 +14,9 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 import { useMutation, useQueryClient } from '@tanstack/vue-query'
 import { GET_ALL, UPDATE_POSITION_KEYS, updatePosition } from '@/services'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 
+const router = useRouter()
 const route = useRoute()
 const script = ref<string[]>([])
 const queryClient = useQueryClient()
@@ -26,6 +27,13 @@ const { mutate } = useMutation({
     updatePosition(script, Number(route.query.robot_id)),
   onSuccess: () => {
     queryClient.invalidateQueries({ queryKey: GET_ALL })
+  },
+  onError: () => {
+    queryClient.invalidateQueries({ queryKey: GET_ALL })
+    router.push({
+      query: { ...route.query, robot_id: '' },
+    })
+    script.value = []
   },
 })
 

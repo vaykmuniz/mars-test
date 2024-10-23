@@ -76,6 +76,13 @@ marsRouter.post("/move", async (req, res) => {
     if (position) {
       const newPosition = await RobotRepository.move(position, moves);
       if (newPosition) {
+        const isOccupied = await RobotRepository.isOccupied(newPosition);
+        if (isOccupied) {
+          await RobotRepository.destroyWhere(position);
+          await RobotRepository.destroyWhere(newPosition);
+          res.status(400).send({ msg: "Position is occupied!" });
+          return;
+        }
         const updated = await RobotRepository.updateOrCreatePosition({
           id: position.id,
           ...newPosition,
