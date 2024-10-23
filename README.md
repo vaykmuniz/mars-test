@@ -36,7 +36,7 @@ To get started with the project, follow these steps:
 
 1. **Clone the repository + Run Docker**
    ```bash
-   git clone https://github.com/vaykmuniz/mars-test
+   git clone https://github.com/vaykmuniz/mars-test.git
    cd ./mars-test
    docker-compose up --build
 
