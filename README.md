@@ -27,8 +27,8 @@ The backend is developed using:
 
 You will need Docker and Docker Compose, and here are some links to help you:
 
-- 📄 [Docker installation on Ubuntu](https://docs.docker.com/engine/install/ubuntu/)
 - 🛠️ [Step-by-step tutorial for installing Docker and Docker Compose on Ubuntu](https://medium.com/@tomer.klein/step-by-step-tutorial-installing-docker-and-docker-compose-on-ubuntu-a98a1b7aaed0)
+- 📄 [Docker installation on Ubuntu](https://docs.docker.com/engine/install/ubuntu/)
 
 💡 Tip: Before starting, you might want to clean up old containers and images using `docker system prune` and shut down any running containers with `docker-compose down`. This will give you a fresh start!
 
@@ -38,6 +38,6 @@ To get started with the project, follow these steps:
    ```bash
    git clone https://github.com/vaykmuniz/mars-test.git
    cd ./mars-test
-   docker-compose up --build
+   sudo docker-compose up --build
 
 2. **Wait install + build, then check `http://localhost:8080/`**
