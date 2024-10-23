@@ -8,6 +8,12 @@ import { faEarthAmericas } from '@fortawesome/free-solid-svg-icons'
     Mars Rover
     <FontAwesomeIcon :icon="faEarthAmericas" spin />
   </head>
+  <section>
+    <p>🪐🤖🌌 Click Empty Space to Place a Land Robot!</p>
+    <p>🖱️💚🤖 Click on your robot to take control!</p>
+    <p>🚫🏔️⚠️ If your robot ends up on the plateau, it's over!</p>
+    <p>🤖➡️🤖💥 If you position your robot over another, both will break!</p>
+  </section>
 </template>
 
 <style scoped>
@@ -26,5 +32,21 @@ import { faEarthAmericas } from '@fortawesome/free-solid-svg-icons'
   color: darkgoldenrod;
 
   font-family: 'Courier New', Courier, monospace;
+}
+
+section {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px;
+  margin: 12px;
+  border-radius: 4px;
+  color: darkgoldenrod;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-size: 16px;
+  font-weight: bolder;
+  text-align: flex-start;
 }
 </style>

@@ -52,13 +52,25 @@ function submit() {
       <MarsHeaders />
       <MoveList :script="script" />
       <div class="row">
-        <StrokeButton color="skyblue" @click="() => appendScript('L')">
+        <StrokeButton
+          color="skyblue"
+          @click="() => appendScript('L')"
+          :disabled="!route.query.robot_id"
+        >
           <FontAwesomeIcon :icon="faRotateBack" />
         </StrokeButton>
-        <StrokeButton color="skyblue" @click="() => appendScript('M')">
+        <StrokeButton
+          color="skyblue"
+          @click="() => appendScript('M')"
+          :disabled="!route.query.robot_id"
+        >
           <FontAwesomeIcon :icon="faArrowUp" />
         </StrokeButton>
-        <StrokeButton color="skyblue" @click="() => appendScript('R')">
+        <StrokeButton
+          color="skyblue"
+          @click="() => appendScript('R')"
+          :disabled="!route.query.robot_id"
+        >
           <FontAwesomeIcon :icon="faRotateForward" />
         </StrokeButton>
       </div>
@@ -69,7 +81,7 @@ function submit() {
         <StrokeButton
           color="greenyellow"
           @click="submit"
-          @disabled="!route.query.robot_id"
+          :disabled="!route.query.robot_id && !script.length"
         >
           <FontAwesomeIcon :icon="faCheck" /> SUBMIT
         </StrokeButton>

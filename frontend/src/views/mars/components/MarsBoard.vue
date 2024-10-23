@@ -70,14 +70,11 @@ const gridRobots = computed(() => {
 const target = computed(() => {
   if (preview.value?.current_position) {
     return {
-      value:
-        preview.value.current_position.y * 15 +
-        preview.value.current_position.x +
-        1,
-      face: faceToDeg[preview.value.current_position.face] || 0,
+      value: getPositionCount(preview.value.current_position),
+      ...preview.value.current_position,
     }
   }
-  return { value: null, face: 0 }
+  return null
 })
 
 function landOnPosition(n: number) {
@@ -117,11 +114,11 @@ function switchRobotControl(count: number) {
           />
         </button>
         <FontAwesomeIcon
-          v-else-if="position === target.value"
+          v-else-if="position === target?.value"
           size="2x"
           style="color: green"
           :icon="faFlagCheckered"
-          :style="{ transform: `rotate(${target.face}deg)` }"
+          :style="{ transform: `rotate(${faceToDeg[target.face]}deg)` }"
         />
         <button v-else @click="landOnPosition(position)"></button>
       </div>
@@ -158,8 +155,6 @@ function switchRobotControl(count: number) {
 }
 
 .grid-item {
-  cursor: pointer;
-
   display: flex;
   justify-content: center;
   align-items: center;
@@ -169,6 +164,7 @@ function switchRobotControl(count: number) {
   height: 100%;
 
   > button {
+    cursor: pointer;
     background-color: rgba(255, 255, 255, 0.35);
     border: 1px solid rgba(0, 0, 0, 0.1);
     height: 100%;
