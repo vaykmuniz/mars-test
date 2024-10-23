@@ -9,12 +9,12 @@ generator client {
 }
 
 datasource db {
-  provider = "mongodb"
+  provider = "mysql"
   url      = env("DATABASE_URL")
 }
 
 model Position {
-  id        String   @id @default(cuid()) @map("_id")
+  id        Int   @id @default(autoincrement())
   x         Int
   y         Int
   face      String

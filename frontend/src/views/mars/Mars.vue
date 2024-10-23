@@ -13,20 +13,19 @@ import {
   faArrowUp,
 } from '@fortawesome/free-solid-svg-icons'
 import { useMutation, useQueryClient } from '@tanstack/vue-query'
-import {
-  GET_CURRENT_POSITION_KEYS,
-  UPDATE_POSITION_KEYS,
-  updatePosition,
-} from '@/services'
+import { GET_ALL, UPDATE_POSITION_KEYS, updatePosition } from '@/services'
+import { useRoute } from 'vue-router'
 
+const route = useRoute()
 const script = ref<string[]>([])
 const queryClient = useQueryClient()
 
 const { mutate } = useMutation({
   mutationKey: UPDATE_POSITION_KEYS,
-  mutationFn: updatePosition,
+  mutationFn: (script: string[]) =>
+    updatePosition(script, Number(route.query.robot_id)),
   onSuccess: () => {
-    queryClient.invalidateQueries({ queryKey: GET_CURRENT_POSITION_KEYS })
+    queryClient.invalidateQueries({ queryKey: GET_ALL })
   },
 })
 
@@ -39,8 +38,11 @@ function clear() {
 }
 
 function submit() {
-  mutate(script.value)
-  script.value = []
+  var id = route.query.robot_id
+  if (id) {
+    mutate(script.value)
+    script.value = []
+  }
 }
 </script>
 
@@ -50,21 +52,25 @@ function submit() {
       <MarsHeaders />
       <MoveList :script="script" />
       <div class="row">
-        <StrokeButton color="skyblue" :onclick="() => appendScript('L')">
+        <StrokeButton color="skyblue" @click="() => appendScript('L')">
           <FontAwesomeIcon :icon="faRotateBack" />
         </StrokeButton>
-        <StrokeButton color="skyblue" :onclick="() => appendScript('M')">
+        <StrokeButton color="skyblue" @click="() => appendScript('M')">
           <FontAwesomeIcon :icon="faArrowUp" />
         </StrokeButton>
-        <StrokeButton color="skyblue" :onclick="() => appendScript('R')">
+        <StrokeButton color="skyblue" @click="() => appendScript('R')">
           <FontAwesomeIcon :icon="faRotateForward" />
         </StrokeButton>
       </div>
       <div class="row">
-        <StrokeButton color="red" :onclick="clear">
+        <StrokeButton color="red" @click="clear" :disabled="!script.length">
           <FontAwesomeIcon :icon="faTrashCan" /> CLEAR
         </StrokeButton>
-        <StrokeButton color="greenyellow" :onclick="submit">
+        <StrokeButton
+          color="greenyellow"
+          @click="submit"
+          @disabled="!route.query.robot_id"
+        >
           <FontAwesomeIcon :icon="faCheck" /> SUBMIT
         </StrokeButton>
       </div>

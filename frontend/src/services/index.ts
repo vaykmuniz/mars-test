@@ -1,33 +1,47 @@
 import type { Position, ResponsePosition } from '@/shared/types'
 import axios from 'axios'
 
-export const BASE_URL = 'http://localhost:3000'
+const BASE_URL = 'http://localhost:3000/mars'
 
-export const GET_CURRENT_POSITION_KEYS = ['GET_CURRENT_POSITION']
-export async function getCurrentPosition() {
-  const uri = BASE_URL + '/mars/'
-  const res = await axios.get<ResponsePosition>(uri).then(res => res.data)
+const URLS = {
+  GET_ALL: BASE_URL,
+  LAND: BASE_URL + '/land',
+  GET_PREVIEW_BY_ID: BASE_URL + '/preview',
+  UPDATE_POSITION: BASE_URL + '/move',
+}
+
+export const GET_ALL = ['GET_ALL']
+export async function getAll() {
+  const res = await axios.get(URLS.GET_ALL).then(res => res.data)
   return res
 }
 
-export const GET_PREVIEW_KEYS = ['GET_PREVIEW']
-export async function getPreview(script: string[]) {
-  const uri = BASE_URL + '/mars/preview'
+export const GET_PREVIEW_BY_ID_KEYS = ['GET_PREVIEW']
+export async function getPreviewById(script: string[], id: number) {
   const res = await axios
-    .post<ResponsePosition>(uri, {
+    .post<ResponsePosition>(URLS.GET_PREVIEW_BY_ID, {
       moves: script,
+      id,
     })
     .then(res => res.data)
   return res
 }
 
 export const UPDATE_POSITION_KEYS = ['UPDATE_POSITION']
-export async function updatePosition(script: string[]) {
-  const uri = BASE_URL + '/mars/move'
+export async function updatePosition(script: string[], id: number) {
   const res = await axios
-    .post<ResponsePosition>(uri, {
+    .post<ResponsePosition>(URLS.UPDATE_POSITION, {
       moves: script,
+      id,
     })
+    .then(res => res.data)
+  return res
+}
+
+export const LAND_KEYS = ['LAND']
+export async function postLand(where: Position) {
+  const res = await axios
+    .post<ResponsePosition>(URLS.LAND, where)
     .then(res => res.data)
   return res
 }

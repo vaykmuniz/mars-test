@@ -1,18 +1,20 @@
 <script setup lang="ts">
 type Props = {
   color: string
+  disabled?: boolean
 }
 
-const props = defineProps<Props>()
+const { color, disabled } = defineProps<Props>()
 </script>
 
 <template>
   <button
     :style="{
-      borderColor: props.color,
-      '--hover-bg-color': props.color,
+      borderColor: color,
+      '--hover-bg-color': color,
     }"
     class="custom-button"
+    :disabled="disabled"
   >
     <slot> </slot>
   </button>
@@ -33,5 +35,11 @@ const props = defineProps<Props>()
 .custom-button:hover {
   background-color: var(--hover-bg-color);
   color: black !important;
+}
+
+.custom-button:disabled {
+  background-color: lightgray;
+  color: gray;
+  cursor: not-allowed;
 }
 </style>

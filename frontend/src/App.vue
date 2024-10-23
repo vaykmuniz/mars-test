@@ -1,9 +1,8 @@
 <script setup lang="ts">
-import Mars from './views/mars/Mars.vue'
 </script>
 
 <template>
-  <Mars />
+  <RouterView />
 </template>
 
 <style scoped></style>

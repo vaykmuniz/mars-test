@@ -3,18 +3,19 @@ import cors from "cors";
 import dotenv from "dotenv";
 import { marsRouter, errorRouter } from "./routes";
 import { prisma } from "./api";
+import { PrismaClient } from "@prisma/client";
 
 dotenv.config();
 
 class Api {
   public app: Application = express();
   public port: number = process.env.PORT ? Number(process.env.PORT) : 3000;
-  private prisma = prisma;
+  public prisma = prisma;
 
   constructor() {
     this.middlewares();
-    this.dbConnect();
     this.addRoutes();
+    this.dbConnect();
     this.start();
   }
 
@@ -28,15 +29,41 @@ class Api {
     this.app.use("*", errorRouter);
   }
 
-  dbConnect() {
-    this.prisma
-      .$connect()
-      .then(() => {
-        console.log("Connected to the database");
-      })
-      .catch((error: unknown) => {
-        console.error("Failed to connect to the database:", error);
-      });
+  async dbConnect(retries = 5, delay = 2000) {
+    await new Promise((resolve) => setTimeout(resolve, delay));
+
+    try {
+      await this.prisma.$connect();
+      this.monitorConnection();
+      console.log("Connected to the database");
+    } catch (error) {
+      if (retries > 0) {
+        console.error(
+          `Failed to connect to the database. Retrying in ${
+            delay / 1000
+          } seconds...`,
+          error
+        );
+        setTimeout(() => this.dbConnect(retries - 1, delay), delay);
+      } else {
+        console.error(
+          "Failed to connect to the database after multiple attempts:",
+          error
+        );
+        process.exit(1);
+      }
+    }
+  }
+
+  monitorConnection() {
+    setInterval(async () => {
+      try {
+        console.log("A conexão com o banco de dados está ativa");
+      } catch (error) {
+        console.error("A conexão com o banco de dados foi perdida:", error);
+        process.exit(1);
+      }
+    }, 5000);
   }
 
   start() {

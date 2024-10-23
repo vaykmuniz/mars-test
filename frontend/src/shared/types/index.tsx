@@ -1,4 +1,5 @@
 export type Position = {
+    id?: number;
     x: number;
     y: number;
     face: string;

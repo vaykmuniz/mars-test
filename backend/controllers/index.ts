@@ -1,2 +1,1 @@
-export * from './position'
-export * from './move'
+export * from "./move";
