@@ -47,7 +47,7 @@ function clear() {
 
 function submit() {
   var id = route.query.robot_id
-  if (id) {
+  if (id && script.value.length > 0) {
     mutate(script.value)
     script.value = []
   }

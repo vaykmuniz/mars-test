@@ -35,7 +35,7 @@ export class RobotRepository {
           y,
         },
       });
-      return !!position;
+      return !!position && position.id !== where.id;
     } catch (error) {
       console.error(error);
       return null;

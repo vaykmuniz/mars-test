@@ -38,7 +38,7 @@ export class MoveController {
       this.x > this.plateau[0] ||
       this.y > this.plateau[1]
     ) {
-      throw new Error("O robô saiu dos limites do plateau!");
+      console.log("O robô saiu dos limites do plateau!");
     }
   }
 

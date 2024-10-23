@@ -76,25 +76,28 @@ marsRouter.post("/move", async (req, res) => {
     if (position) {
       const newPosition = await RobotRepository.move(position, moves);
       if (newPosition) {
-        const isOccupied = await RobotRepository.isOccupied(newPosition);
-        if (isOccupied) {
-          await Promise.all([
-            RobotRepository.destroyWhere(position),
-            RobotRepository.destroyWhere(newPosition),
-          ]);
-          res.status(400).send({ msg: "Position is occupied!" });
+        const isOccupied = await RobotRepository.isOccupied({
+          id,
+          ...newPosition,
+        });
+        if (!isOccupied) {
+          const updated = await RobotRepository.updateOrCreatePosition({
+            id: position.id,
+            ...newPosition,
+            createdAt: position.createdAt,
+            updatedAt: new Date(),
+          });
+          await RobotRepository.destroyOutOfPlateau();
+          res.status(200).send({ current_position: updated });
           return;
         }
-        const updated = await RobotRepository.updateOrCreatePosition({
-          id: position.id,
-          ...newPosition,
-          createdAt: position.createdAt,
-          updatedAt: new Date(),
-        });
-        res.status(200).send({ current_position: updated });
+        await Promise.all([
+          RobotRepository.destroyWhere(position),
+          RobotRepository.destroyWhere(newPosition),
+        ]);
+        res.status(400).send({ msg: "Position is occupied! Kabuum!" });
         return;
       }
-      await RobotRepository.destroyOutOfPlateau();
       res.status(400).send({ msg: "Move failed!" });
       return;
     }

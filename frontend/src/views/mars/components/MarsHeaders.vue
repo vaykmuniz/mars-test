@@ -7,6 +7,7 @@ import { faEarthAmericas } from '@fortawesome/free-solid-svg-icons'
   <head class="header">
     Mars Rover
     <FontAwesomeIcon :icon="faEarthAmericas" spin />
+    gabriel muniz
   </head>
   <section>
     <p>🪐🤖🌌 Click Empty Space to Place a Land Robot!</p>

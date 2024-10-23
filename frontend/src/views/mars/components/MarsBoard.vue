@@ -1,6 +1,10 @@
 <script setup lang="ts">
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { faDog, faFlagCheckered } from '@fortawesome/free-solid-svg-icons'
+import {
+  faDog,
+  faFlagCheckered,
+  faSpinner,
+} from '@fortawesome/free-solid-svg-icons'
 
 import { useMutation, useQuery, useQueryClient } from '@tanstack/vue-query'
 import {
@@ -23,7 +27,7 @@ const props = defineProps<{ script: string[] }>()
 const queryClient = useQueryClient()
 const { script } = toRefs(props)
 
-const { data: robots } = useQuery<Position[]>({
+const { data: robots, isPending } = useQuery<Position[]>({
   queryKey: GET_ALL,
   queryFn: getAll,
 })
@@ -84,7 +88,7 @@ function switchRobotControl(count: number) {
 </script>
 
 <template>
-  <div class="board">
+  <div v-if="!isPending" class="board">
     <div class="grid">
       <div v-for="position in 225" :key="position" class="grid-item">
         <button
@@ -112,6 +116,9 @@ function switchRobotControl(count: number) {
         <button v-else @click="landOnPosition(position)"></button>
       </div>
     </div>
+  </div>
+  <div v-else class="center">
+    <FontAwesomeIcon :icon="faSpinner" spin size="4x" />
   </div>
 </template>
 
@@ -158,6 +165,15 @@ function switchRobotControl(count: number) {
     border: 1px solid rgba(0, 0, 0, 0.1);
     height: 100%;
     width: 100%;
+  }
+
+  .center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    min-width: 300px;
   }
 }
 </style>
