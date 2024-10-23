@@ -42,7 +42,7 @@ function getIcon(move: string) {
 }
 
 .action_list {
-  width: 100%;
+  width: 200px;
   height: 50%;
   overflow-y: auto;
 
