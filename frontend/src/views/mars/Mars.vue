@@ -56,6 +56,8 @@ function submit() {
 
 <template>
   <div class="row">
+    <p class="absolute_tag_top">MADE BY gabriel muniz - vaykz</p>
+    <p class="absolute_tag_bottom">MADE BY - vaykz</p>
     <div class="container">
       <MarsHeaders />
       <MoveList :script="script" />
@@ -114,5 +116,32 @@ function submit() {
   justify-content: center;
   align-items: center;
   gap: 10px;
+  width: 100%;
+}
+
+.absolute_tag_top {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  animation: move 11s linear infinite alternate;
+}
+
+.absolute_tag_bottom {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  animation: move 10s linear infinite alternate;
+  animation-direction: alternate-reverse;
+}
+
+@keyframes move {
+  from {
+    left: 0;
+  }
+  to {
+    left: 90%;
+  }
 }
 </style>
