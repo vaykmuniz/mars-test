@@ -19,7 +19,7 @@ services:
       DATABASE_URL: mysql://root:example@localhost:3306/mydatabase
     ports:
       - "3000:3000"
-    command: sh -c 'sleep 5; npx prisma db push && npm start'
+    command: sh -c 'sleep 3; npx prisma db push && npm start'
     network_mode: "host"
 
   frontend:

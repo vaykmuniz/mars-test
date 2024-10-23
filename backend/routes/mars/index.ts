@@ -78,8 +78,10 @@ marsRouter.post("/move", async (req, res) => {
       if (newPosition) {
         const isOccupied = await RobotRepository.isOccupied(newPosition);
         if (isOccupied) {
-          await RobotRepository.destroyWhere(position);
-          await RobotRepository.destroyWhere(newPosition);
+          await Promise.all([
+            RobotRepository.destroyWhere(position),
+            RobotRepository.destroyWhere(newPosition),
+          ]);
           res.status(400).send({ msg: "Position is occupied!" });
           return;
         }
@@ -92,6 +94,7 @@ marsRouter.post("/move", async (req, res) => {
         res.status(200).send({ current_position: updated });
         return;
       }
+      await RobotRepository.destroyOutOfPlateau();
       res.status(400).send({ msg: "Move failed!" });
       return;
     }

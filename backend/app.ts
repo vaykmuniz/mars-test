@@ -58,12 +58,12 @@ class Api {
   monitorConnection() {
     setInterval(async () => {
       try {
-        console.log("A conexão com o banco de dados está ativa");
+        console.log("Database connection is active");
       } catch (error) {
-        console.error("A conexão com o banco de dados foi perdida:", error);
+        console.error("Database connection was lost:", error);
         process.exit(1);
       }
-    }, 5000);
+    }, 10000);
   }
 
   start() {

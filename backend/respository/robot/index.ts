@@ -85,7 +85,23 @@ export class RobotRepository {
   ) {
     try {
       return await prisma.position.deleteMany({
-        where,
+        where: {
+          x: where.x,
+          y: where.y,
+        },
+      });
+    } catch (error) {
+      console.error(error);
+      return null;
+    }
+  }
+
+  static async destroyOutOfPlateau() {
+    try {
+      await prisma.position.deleteMany({
+        where: {
+          OR: [{ x: { gt: 15 } }, { y: { gt: 15 } }],
+        },
       });
     } catch (error) {
       console.error(error);
