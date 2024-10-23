@@ -40,3 +40,4 @@ To get started with the project, follow these steps:
    cd ./mars-test
    docker-compose up --build
 
+2. **Wait install + build, then check `http://localhost:8080/`**
