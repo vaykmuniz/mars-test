@@ -2,6 +2,8 @@
 
 Welcome to the **Mars Rover Project**! This project aims to simulate a Mars rover's operations using a modern tech stack, including **TypeScript** for enhanced code quality. Explore the vast Martian landscape and gather data as our rover navigates the terrain!
 
+![image](https://github.com/user-attachments/assets/18f4f16e-7c84-4c2a-a501-d4ed3271cdc6)
+
 ## 🌐 Frontend
 
 The frontend is built using:
@@ -30,3 +32,4 @@ To get started with the project, follow these steps:
    git clone https://github.com/vaykmuniz/mars-test
    cd ./mars-test
    docker-compose up --build
+
