@@ -23,7 +23,14 @@ The backend is developed using:
 - **Prisma** 🗄️: An ORM for Node.js, providing a seamless database interaction.
 - **MySQL** 🐬: The relational database management system to store our rover's data.
 
-## 📦 Installation
+## 📦 Requirements + Installation
+
+You will need Docker and Docker Compose, and here are some links to help you:
+
+- 📄 [Docker installation on Ubuntu](https://docs.docker.com/engine/install/ubuntu/)
+- 🛠️ [Step-by-step tutorial for installing Docker and Docker Compose on Ubuntu](https://medium.com/@tomer.klein/step-by-step-tutorial-installing-docker-and-docker-compose-on-ubuntu-a98a1b7aaed0)
+
+💡 Tip: Before starting, you might want to clean up old containers and images using docker system prune and shut down any running containers with docker-compose down. This will give you a fresh start!
 
 To get started with the project, follow these steps:
 
