@@ -43,7 +43,7 @@ function getIcon(move: string) {
 
 .action_list {
   width: 200px;
-  height: 50%;
+  height: 200px;
   overflow-y: auto;
 
   display: flex;

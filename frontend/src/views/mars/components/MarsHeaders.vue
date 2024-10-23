@@ -7,7 +7,6 @@ import { faEarthAmericas } from '@fortawesome/free-solid-svg-icons'
   <head class="header">
     Mars Rover
     <FontAwesomeIcon :icon="faEarthAmericas" spin />
-    gabriel muniz
   </head>
   <section>
     <p>🪐🤖🌌 Click Empty Space to Place a Land Robot!</p>
@@ -31,6 +30,7 @@ import { faEarthAmericas } from '@fortawesome/free-solid-svg-icons'
   font-size: 42px;
   font-weight: lighter;
   color: darkgoldenrod;
+  text-align: center;
 
   font-family: 'Courier New', Courier, monospace;
 }
@@ -38,15 +38,15 @@ import { faEarthAmericas } from '@fortawesome/free-solid-svg-icons'
 section {
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
+  justify-content: center;
+  align-items: center;
   gap: 12px;
   padding: 12px;
   margin: 12px;
   border-radius: 4px;
   color: darkgoldenrod;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
-  font-size: 16px;
+  font-size: 12px;
   font-weight: bolder;
   text-align: flex-start;
 }

@@ -107,7 +107,6 @@ function submit() {
   align-items: center;
   gap: 12px;
   height: 100vh;
-  padding: 42px;
 }
 
 .row {

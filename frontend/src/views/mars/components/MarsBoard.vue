@@ -91,28 +91,16 @@ function switchRobotControl(count: number) {
   <div v-if="!isPending" class="board">
     <div class="grid">
       <div v-for="position in 225" :key="position" class="grid-item">
-        <button
-          v-if="
-            gridRobots && gridRobots.map(val => val.value).includes(position)
-          "
-          @click="switchRobotControl(position)"
-        >
-          <FontAwesomeIcon
-            size="2x"
-            :icon="faDog"
-            :style="{
-              color: `${gridRobots.find(el => el.value === position)?.isSelected ? 'green' : 'black'}`,
-              transform: `rotate(${faceToDeg[gridRobots.find(el => el.value === position)?.face || 'N']}deg)`,
-            }"
-          />
+        <button v-if="
+          gridRobots && gridRobots.map(val => val.value).includes(position)
+        " @click="switchRobotControl(position)">
+          <FontAwesomeIcon size='lg' :icon="faDog" :style="{
+            color: `${gridRobots.find(el => el.value === position)?.isSelected ? 'green' : 'black'}`,
+            transform: `rotate(${faceToDeg[gridRobots.find(el => el.value === position)?.face || 'N']}deg)`,
+          }" />
         </button>
-        <FontAwesomeIcon
-          v-else-if="position === target?.value"
-          size="2x"
-          style="color: green"
-          :icon="faFlagCheckered"
-          :style="{ transform: `rotate(${faceToDeg[target.face]}deg)` }"
-        />
+        <FontAwesomeIcon size="lg" v-else-if="position === target?.value" style="color: green" :icon="faFlagCheckered"
+          :style="{ transform: `rotate(${faceToDeg[target.face]}deg)` }" />
         <button v-else @click="landOnPosition(position)"></button>
       </div>
     </div>
@@ -124,9 +112,10 @@ function switchRobotControl(count: number) {
 
 <style scoped>
 .board {
+  display: flex;
   position: relative;
-  width: 800px;
-  height: 800px;
+  min-width: 500px;
+  min-height: 500px;
   background-image: url('@/shared/images/mars.jpg');
   background-size: cover;
   background-position: center;
@@ -134,12 +123,13 @@ function switchRobotControl(count: number) {
   border: 2px solid goldenrod;
 }
 
+
 .grid {
   transform: rotate(180deg);
   display: grid;
   direction: rtl;
-  grid-template-columns: repeat(auto-fill, minmax(50px, 1fr));
-  grid-template-rows: repeat(auto-fill, minmax(50px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(30px, 1fr));
+  grid-template-rows: repeat(auto-fill, minmax(30px, 1fr));
   gap: 2px;
 
   padding: 4px;
@@ -159,7 +149,7 @@ function switchRobotControl(count: number) {
   width: 100%;
   height: 100%;
 
-  > button {
+  >button {
     cursor: pointer;
     background-color: rgba(255, 255, 255, 0.35);
     border: 1px solid rgba(0, 0, 0, 0.1);
