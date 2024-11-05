@@ -1,6 +1,6 @@
 import { Position } from "@prisma/client";
 
-export class MoveController {
+export class MoveService {
   plateau: number[] = [15, 15];
   x: number;
   y: number;

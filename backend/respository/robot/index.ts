@@ -1,5 +1,5 @@
 import { prisma } from "../../api";
-import { MoveController } from "../../controllers";
+import { MoveService } from "../../services";
 import { Position } from "@prisma/client";
 
 export class RobotRepository {
@@ -58,7 +58,7 @@ export class RobotRepository {
 
   static async move(from: Position, moves: string) {
     try {
-      const robot = new MoveController(from);
+      const robot = new MoveService(from);
       return robot.executeMoves(moves);
     } catch (error) {
       console.error(error);
